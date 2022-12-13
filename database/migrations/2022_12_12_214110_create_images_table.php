@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')
-                ->constrained('users')
+            $table->foreignId('post_id')
+                ->constrained('posts')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->string('path', 128)->unique();
