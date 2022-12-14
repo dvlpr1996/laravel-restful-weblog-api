@@ -9,7 +9,9 @@ use App\Models\Image;
 use App\Models\Comment;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 
 class Post extends Model
 {
@@ -52,5 +54,19 @@ class Post extends Model
     public function like()
     {
         return $this->morphOne(Like::class, 'likeable');
+    }
+
+    protected function createdAt(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => date('Y-m-d', strtotime($value))
+        );
+    }
+
+    protected function updatedAt(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => date('Y-m-d', strtotime($value))
+        );
     }
 }

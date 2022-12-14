@@ -15,6 +15,13 @@ class Tag extends Model
         'name'
     ];
 
+    protected $hidden = [
+        'id',
+        'pivot',
+        'created_at',
+        'updated_at'
+    ];
+
     public function posts()
     {
         return $this->belongsToMany(Post::class);

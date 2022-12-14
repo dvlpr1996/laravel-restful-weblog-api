@@ -15,6 +15,13 @@ class Image extends Model
         'user_id',
     ];
 
+    protected $hidden = [
+        'id',
+        'post_id',
+        'created_at',
+        'updated_at'
+    ];
+
     public function post()
     {
         return $this->belongsTo(Post::class);
