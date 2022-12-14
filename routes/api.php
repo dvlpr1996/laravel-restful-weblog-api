@@ -4,15 +4,19 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\ApiController;
 use App\Http\Controllers\Api\v1\PostController;
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 Route::prefix('v1')->group(function () {
     Route::Get('/', [ApiController::class, 'index'])->name('mainEndPoints');
 
-    Route::resource('posts', PostController::class);
+    Route::controller(PostController::class)->group(function () {
+        Route::Get('posts', 'index');
+        Route::Get('posts/{post}', 'show')->where('post', '[0-9A-Za-z-]+');
 
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::POST('posts', 'store');
+            Route::Put('posts/{post:slug}', 'update')->where('post', '[A-Za-z-]+');
+            Route::DELETE('posts/{post:slug}', 'destroy')->where('post', '[A-Za-z-]+');
+        });
+    });
 });
 
 Route::fallback(function () {
