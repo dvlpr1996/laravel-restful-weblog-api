@@ -16,6 +16,7 @@ class PostFactory extends Factory
             'title' => fake()->sentence(10, true),
             'user_id' => User::first() ?? User::factory(),
             'summary' => fake()->sentence(5,true),
+            'tags' => fake()->word(),
             'category_id' => Category::first() ?? Category::factory()
         ];
     }

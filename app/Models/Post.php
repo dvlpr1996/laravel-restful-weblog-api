@@ -8,14 +8,14 @@ use App\Models\User;
 use App\Models\Image;
 use App\Models\Comment;
 use App\Models\Category;
+use Conner\Tagging\Taggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, Taggable;
 
     protected $fillable = [
         'body',
@@ -23,6 +23,7 @@ class Post extends Model
         'title',
         'user_id',
         'summary',
+        'tags',
         'category_id'
     ];
 
@@ -44,11 +45,6 @@ class Post extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
-    }
-
-    public function tags()
-    {
-        return $this->belongsToMany(Tag::class);
     }
 
     public function like()
