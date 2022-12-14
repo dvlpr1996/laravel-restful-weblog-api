@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\ApiController;
 use App\Http\Controllers\Api\v1\PostController;
+use App\Http\Controllers\Api\v1\auth\AuthController;
 
 Route::prefix('v1')->group(function () {
     Route::Get('/', [ApiController::class, 'index'])->name('mainEndPoints');
@@ -15,6 +16,12 @@ Route::prefix('v1')->group(function () {
             Route::POST('posts', 'store');
             Route::Put('posts/{post:slug}', 'update')->where('post', '[A-Za-z-]+');
             Route::DELETE('posts/{post:slug}', 'destroy')->where('post', '[A-Za-z-]+');
+        });
+    });
+
+    Route::controller(AuthController::class)->group(function () {
+        Route::Post('auth/login', 'login');
+        Route::middleware('auth:sanctum')->group(function () {
         });
     });
 });
