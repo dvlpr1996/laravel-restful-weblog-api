@@ -22,6 +22,7 @@ Route::prefix('v1')->group(function () {
     Route::controller(AuthController::class)->group(function () {
         Route::Post('auth/login', 'login');
         Route::middleware('auth:sanctum')->group(function () {
+            Route::get('auth/logout', 'logout');
         });
     });
 });
