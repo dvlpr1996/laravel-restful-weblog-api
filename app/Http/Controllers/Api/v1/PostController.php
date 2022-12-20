@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Models\Post;
-use Illuminate\Http\Request;
+use App\Models\Image;
+use Illuminate\Support\Str;
+use App\Http\Requests\PostRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PostResource;
 use App\Http\Resources\PostCollection;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\PostUpdateRequest;
 
 class PostController extends Controller
 {
@@ -15,9 +19,43 @@ class PostController extends Controller
         return new PostCollection(Post::paginate(10));
     }
 
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        //
+        $fileName = Str::slug(mt_rand(1, time()) . ' ' . $request->title) . '.' . $request->file('image')->extension();
+
+        if (!Storage::disk('public')->exists('/images/')) {
+            Storage::disk('public')->makeDirectory('images');
+        }
+
+        $tags = explode(", ", $request->tags);
+
+        $post = Post::create([
+            'body' => $request->body,
+            'title' => $request->title,
+            'slug' => Str::slug($request->title),
+            'summary' => $request->summary,
+            'user_id' => auth()->user()->id,
+            'category_id' => $request->category_id,
+            'tags' => $request->tags,
+        ]);
+
+        $post->tag($tags);
+
+        $file = Storage::putFileAs('public/images', $request->file('image'), $fileName);
+
+        if (!$file) {
+            $file = 'file does not upload successfully';
+        }
+
+        Image::create([
+            'post_id' => $post->id,
+            'path' => $file
+        ]);
+
+        return response()->json([
+            'message' => 'post successfully created',
+            'status_code' => '201'
+        ], 201);
     }
 
     public function show($requestData)
@@ -31,19 +69,58 @@ class PostController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(PostUpdateRequest $request, Post $post)
     {
-        //
+        $fileName = Str::slug($request->title) . '.' . $request->file('image')->extension();
+
+        if (!Storage::disk('public')->exists('/images/')) {
+            Storage::disk('public')->makeDirectory('images');
+        }
+
+        $tags = explode(", ", $request->tags);
+
+        $post->update([
+            'body' => $request->body,
+            'title' => $request->title,
+            'slug' => Str::slug($request->title),
+            'summary' => $request->summary,
+            'user_id' => auth()->user()->id,
+            'category_id' => $request->category_id,
+            'tags' => $request->tags,
+        ]);
+
+        $post->tag($tags);
+
+        $file = Storage::putFileAs('public/images', $request->file('image'), $fileName);
+
+        if (!$file) {
+            $file = 'file does not upload successfully';
+        }
+
+        $image = Image::where('post_id', $post->id)->update([
+            'post_id' => $post->id,
+            'path' => $file
+        ]);
+
+        return response()->json([
+            'message' => 'post successfully updated',
+            'status_code' => '200'
+        ], 200);
     }
 
     public function destroy($requestData)
     {
         if (is_numeric($requestData) && preg_match('/^\d+$/', $requestData)) {
-            return Post::findOrFail($requestData)->delete();
+            Post::findOrFail($requestData)->delete();
         }
 
         if (is_string($requestData) && preg_match('/[-a-zA-Z]+/', $requestData)) {
-            return Post::where('slug', $requestData)->firstOrFail()->delete();
+            Post::where('slug', $requestData)->firstOrFail()->delete();
         }
+
+        return response()->json([
+            'message' => 'post deleted successfully',
+            'status_code' => '200'
+        ], 200);
     }
 }

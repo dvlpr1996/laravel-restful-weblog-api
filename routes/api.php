@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\ApiController;
 use App\Http\Controllers\Api\v1\PostController;
+use App\Http\Controllers\Api\v1\UserController;
 use App\Http\Controllers\Api\v1\auth\AuthController;
 
 Route::prefix('v1')->group(function () {
@@ -14,8 +15,19 @@ Route::prefix('v1')->group(function () {
 
         Route::middleware('auth:sanctum')->group(function () {
             Route::POST('posts', 'store');
-            Route::Put('posts/{post:slug}', 'update')->where('post', '[A-Za-z-]+');
-            Route::DELETE('posts/{post:slug}', 'destroy')->where('post', '[A-Za-z-]+');
+            Route::POST('posts/{post:slug}', 'update')->where('post', '[0-9A-Za-z-]+');
+            Route::delete('posts/{post}', 'destroy')->where('post', '[0-9A-Za-z-]+');
+        });
+    });
+
+    Route::controller(UserController::class)->group(function () {
+        Route::Get('users/{user}', 'show')->where('user', '[0-9A-Za-z-]+');
+
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::Get('auth/me', 'me');
+            Route::POST('users', 'store');
+            Route::Put('users/{user:slug}', 'update')->where('user', '[0-9A-Za-z-]+');
+            Route::delete('users/{user}', 'destroy')->where('user', '[0-9A-Za-z-]+');
         });
     });
 
