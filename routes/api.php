@@ -33,7 +33,7 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::controller(UserController::class)->group(function () {
-        Route::GET('users/', 'index')->where('user', '[0-9A-Za-z-]+');
+        Route::GET('users', 'index');
         Route::GET('users/{user}', 'show');
 
         Route::middleware('auth:sanctum')->group(function () {
