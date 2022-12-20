@@ -21,12 +21,12 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::controller(UserController::class)->group(function () {
+        Route::Get('users/', 'index')->where('user', '[0-9A-Za-z-]+');
         Route::Get('users/{user}', 'show')->where('user', '[0-9A-Za-z-]+');
 
         Route::middleware('auth:sanctum')->group(function () {
             Route::Get('auth/me', 'me');
-            Route::POST('users', 'store');
-            Route::Put('users/{user:slug}', 'update')->where('user', '[0-9A-Za-z-]+');
+            Route::Post('users/{user:slug}', 'update')->where('user', '[0-9A-Za-z-]+');
             Route::delete('users/{user}', 'destroy')->where('user', '[0-9A-Za-z-]+');
         });
     });

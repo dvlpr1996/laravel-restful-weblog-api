@@ -16,7 +16,7 @@ class PostUpdateRequest extends FormRequest
     {
         return [
             'body' => ['nullable', 'string'],
-            'title' => ['nullable', 'string', 'max:128'],
+            'title' => ['nullable', 'string', 'max:128','unique:posts'],
             'summary' => ['nullable', 'string', 'max:128'],
             'category_id' => ['nullable', Rule::in(['1', '2', '3', '4'])],
             'tags' => ['nullable', 'string'],

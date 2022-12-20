@@ -41,4 +41,20 @@ class User extends Authenticatable
     {
         return str_replace('-', ' ', $this->attributes['slug']);
     }
+
+    public function gravatar()
+	{
+		$hash = md5(strtolower($this->attributes['email']));
+		return "http://s.gravatar.com/avatar/$hash";
+	}
+
+    public function scopeWriter($query)
+    {
+        $query->where('role', '0');
+    }
+
+    public function scopeAdmin($query)
+    {
+        $query->where('role', '1');
+    }
 }
