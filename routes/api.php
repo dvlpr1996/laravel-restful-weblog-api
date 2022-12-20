@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\ApiController;
+use App\Http\Controllers\Api\v1\TagController;
 use App\Http\Controllers\Api\v1\PostController;
 use App\Http\Controllers\Api\v1\UserController;
 use App\Http\Controllers\Api\v1\CategoryController;
@@ -40,6 +41,7 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::get('categories/{category:slug}/posts', [CategoryController::class, 'show']);
+    Route::get('tags/{tagged:slug}/posts', [TagController::class, 'show']);
 });
 
 Route::fallback(function () {
