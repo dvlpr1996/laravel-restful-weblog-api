@@ -45,7 +45,7 @@ class PostController extends Controller
         $file = Storage::putFileAs('public/images', $request->file('image'), $fileName);
 
         if (!$file) {
-            $file = 'file does not upload successfully';
+            $file = __('api.file_error');
         }
 
         Image::create([
@@ -54,7 +54,7 @@ class PostController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'post successfully created',
+            'message' => __('api.post_create_ok'),
             'status_code' => '201'
         ], 201);
     }
@@ -95,7 +95,7 @@ class PostController extends Controller
         $file = Storage::putFileAs('public/images', $request->file('image'), $fileName);
 
         if (!$file) {
-            $file = 'file does not upload successfully';
+            $file = __('api.file_error');
         }
 
         $image = Image::where('post_id', $post->id)->update([
@@ -104,7 +104,7 @@ class PostController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'post successfully updated',
+            'message' => __('api.post_update_ok'),
             'status_code' => '200'
         ], 200);
     }
@@ -120,7 +120,7 @@ class PostController extends Controller
         }
 
         return response()->json([
-            'message' => 'post deleted successfully',
+            'message' => __('api.post_del_ok'),
             'status_code' => '200'
         ], 200);
     }

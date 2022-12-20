@@ -45,7 +45,7 @@ class UserController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'your account info successfully updated',
+            'message' => __('api.account_update_ok'),
             'status_code' => '200'
         ], 200);
     }
@@ -61,7 +61,7 @@ class UserController extends Controller
         }
 
         return response()->json([
-            'message' => 'post deleted successfully',
+            'message' => __('api.account_delete_ok'),
             'status_code' => '200'
         ], 200);
     }
