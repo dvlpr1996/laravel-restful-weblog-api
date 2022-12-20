@@ -22,24 +22,24 @@ Route::prefix('v1')->group(function () {
 
     Route::controller(PostController::class)->group(function () {
         Route::GET('posts', 'index');
-        Route::GET('posts/{post}', 'show')->where('post', '[0-9A-Za-z-]+');
-        Route::GET('users/{user:slug}/posts', 'userPost')->where('user', '[0-9A-Za-z-]+');
+        Route::GET('posts/{post}', 'show');
+        Route::GET('users/{user:slug}/posts', 'userPost');
 
         Route::middleware('auth:sanctum')->group(function () {
             Route::POST('posts', 'store');
-            Route::POST('posts/{post:slug}', 'update')->where('post', '[0-9A-Za-z-]+');
-            Route::delete('posts/{post}', 'destroy')->where('post', '[0-9A-Za-z-]+');
+            Route::POST('posts/{post:slug}', 'update');
+            Route::delete('posts/{post}', 'destroy');
         });
     });
 
     Route::controller(UserController::class)->group(function () {
         Route::GET('users/', 'index')->where('user', '[0-9A-Za-z-]+');
-        Route::GET('users/{user}', 'show')->where('user', '[0-9A-Za-z-]+');
+        Route::GET('users/{user}', 'show');
 
         Route::middleware('auth:sanctum')->group(function () {
             Route::GET('auth/me', 'me');
-            Route::Post('users/{user:slug}', 'update')->where('user', '[0-9A-Za-z-]+');
-            Route::delete('users/{user}', 'destroy')->where('user', '[0-9A-Za-z-]+');
+            Route::Post('users/{user:slug}', 'update');
+            Route::delete('users/{user}', 'destroy');
         });
     });
 
