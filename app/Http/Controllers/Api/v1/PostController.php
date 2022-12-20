@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Models\Post;
+use App\Models\User;
 use App\Models\Image;
 use Illuminate\Support\Str;
 use App\Http\Requests\PostRequest;
@@ -122,5 +123,10 @@ class PostController extends Controller
             'message' => 'post deleted successfully',
             'status_code' => '200'
         ], 200);
+    }
+
+    public function userPost(User $user)
+    {
+        return new PostCollection($user->posts()->paginate(10));
     }
 }

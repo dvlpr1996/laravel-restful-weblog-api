@@ -3,17 +3,27 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\ApiController;
 use App\Http\Controllers\Api\v1\TagController;
+use App\Http\Controllers\Api\v1\LikeController;
 use App\Http\Controllers\Api\v1\PostController;
 use App\Http\Controllers\Api\v1\UserController;
 use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\auth\AuthController;
 
 Route::prefix('v1')->group(function () {
-    Route::Get('/', [ApiController::class, 'index'])->name('mainEndPoints');
+
+    Route::GET('/', [ApiController::class, 'index'])->name('mainEndPoints');
+    Route::GET('categories/{category:slug}/posts', [CategoryController::class, 'show']);
+    Route::GET('tags/{tagged:slug}/posts', [TagController::class, 'show']);
+
+    // Route::middleware('auth:sanctum')->group(function () {
+    //     Route::get('{likeable_type}/{likeable_id}/like', [LikeController::class, 'like']);
+    //     Route::get('{likeable_type}/{likeable_id}/dislike', [DislikeController::class, 'dislike']);
+    // });
 
     Route::controller(PostController::class)->group(function () {
-        Route::Get('posts', 'index');
-        Route::Get('posts/{post}', 'show')->where('post', '[0-9A-Za-z-]+');
+        Route::GET('posts', 'index');
+        Route::GET('posts/{post}', 'show')->where('post', '[0-9A-Za-z-]+');
+        Route::GET('users/{user:slug}/posts', 'userPost')->where('user', '[0-9A-Za-z-]+');
 
         Route::middleware('auth:sanctum')->group(function () {
             Route::POST('posts', 'store');
@@ -23,11 +33,11 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::controller(UserController::class)->group(function () {
-        Route::Get('users/', 'index')->where('user', '[0-9A-Za-z-]+');
-        Route::Get('users/{user}', 'show')->where('user', '[0-9A-Za-z-]+');
+        Route::GET('users/', 'index')->where('user', '[0-9A-Za-z-]+');
+        Route::GET('users/{user}', 'show')->where('user', '[0-9A-Za-z-]+');
 
         Route::middleware('auth:sanctum')->group(function () {
-            Route::Get('auth/me', 'me');
+            Route::GET('auth/me', 'me');
             Route::Post('users/{user:slug}', 'update')->where('user', '[0-9A-Za-z-]+');
             Route::delete('users/{user}', 'destroy')->where('user', '[0-9A-Za-z-]+');
         });
@@ -36,12 +46,9 @@ Route::prefix('v1')->group(function () {
     Route::controller(AuthController::class)->group(function () {
         Route::Post('auth/login', 'login');
         Route::middleware('auth:sanctum')->group(function () {
-            Route::get('auth/logout', 'logout');
+            Route::GET('auth/logout', 'logout');
         });
     });
-
-    Route::get('categories/{category:slug}/posts', [CategoryController::class, 'show']);
-    Route::get('tags/{tagged:slug}/posts', [TagController::class, 'show']);
 });
 
 Route::fallback(function () {
