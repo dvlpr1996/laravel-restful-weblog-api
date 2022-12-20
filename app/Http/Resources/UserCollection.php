@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class UserCollection extends ResourceCollection
@@ -10,11 +11,7 @@ class UserCollection extends ResourceCollection
     {
         return [
             'data' => $this->collection,
-            'meta' => [
-                'created at' => '12-13-2022',
-                'home page' => 'https://github.com/dvlpr1996/',
-                'copyright' => 'Copyright © 2022 (until present) Laravel restful weblog api. All Rights Reserved'
-            ]
+            'meta' => Config::get('api.meta_info')
         ];
     }
 }
