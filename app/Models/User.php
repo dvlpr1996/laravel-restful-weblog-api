@@ -6,6 +6,7 @@ namespace App\Models;
 use App\Models\Post;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -56,5 +57,13 @@ class User extends Authenticatable
     public function scopeAdmin($query)
     {
         $query->where('role', '1');
+    }
+
+    public function scopeSort(Builder $query, array $params)
+    {
+        if (isset($params['q']))
+            $query->posts()->where('slug', 'like', '%' . $params['q'] . '%');
+
+        return $query;
     }
 }

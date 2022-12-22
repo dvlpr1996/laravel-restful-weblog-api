@@ -126,8 +126,8 @@ class PostController extends Controller
         ], 200);
     }
 
-    public function userPost(User $user)
+    public function userPost(Request $request, User $user)
     {
-        return new PostCollection($user->posts()->paginate(10));
+        return new PostCollection($user->posts()->sort($request->all())->paginate(10));
     }
 }

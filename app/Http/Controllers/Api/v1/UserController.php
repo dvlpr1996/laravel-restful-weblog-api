@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Models\User;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UserCollection;
-use Illuminate\Support\Facades\Request;
 use App\Http\Requests\WriterUpdateRequest;
 
 class UserController extends Controller
