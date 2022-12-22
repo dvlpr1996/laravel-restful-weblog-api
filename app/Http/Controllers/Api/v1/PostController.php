@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\Image;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PostResource;
@@ -15,9 +16,9 @@ use App\Http\Requests\PostUpdateRequest;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return new PostCollection(Post::paginate(10));
+        return new PostCollection(Post::sort($request->all())->paginate(10)->withQueryString());
     }
 
     public function store(PostRequest $request)

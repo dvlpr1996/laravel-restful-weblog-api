@@ -9,13 +9,15 @@ use App\Models\Image;
 use App\Models\Comment;
 use App\Models\Category;
 use Conner\Tagging\Taggable;
+use App\Models\traits\Likeable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
-    use HasFactory, Taggable;
+    use HasFactory, Taggable, Likeable;
 
     protected $fillable = [
         'body',
@@ -47,11 +49,6 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function like()
-    {
-        return $this->morphOne(Like::class, 'likeable');
-    }
-
     protected function createdAt(): Attribute
     {
         return Attribute::make(
@@ -64,5 +61,19 @@ class Post extends Model
         return Attribute::make(
             get: fn ($value) => date('Y-m-d', strtotime($value))
         );
+    }
+
+    public static function scopeSort(Builder $query, array $params)
+    {
+        if (isset($params['q']))
+            $query->where('slug', 'like', '%' . $params['q'] . '%');
+
+        if (isset($params['sort']) && $params['sort'] == 'oldest')
+            $query->orderBy('created_at', 'asc');
+
+        if (isset($params['sort']) && $params['sort'] == 'latest')
+            $query->orderByDesc('created_at');
+
+        return $query;
     }
 }
