@@ -15,10 +15,10 @@ Route::prefix('v1')->group(function () {
     Route::GET('categories/{category:slug}/posts', [CategoryController::class, 'show']);
     Route::GET('tags/{tagged:slug}/posts', [TagController::class, 'show']);
 
-    // Route::middleware('auth:sanctum')->group(function () {
-    //     Route::get('{likeable_type}/{likeable_id}/like', [LikeController::class, 'like']);
-    //     Route::get('{likeable_type}/{likeable_id}/dislike', [DislikeController::class, 'dislike']);
-    // });
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('{likeable_type}/{likeable_id}/like', [LikeController::class, 'like']);
+        Route::get('{likeable_type}/{likeable_id}/dislike', [DislikeController::class, 'dislike']);
+    });
 
     Route::controller(PostController::class)->group(function () {
         Route::GET('posts', 'index');

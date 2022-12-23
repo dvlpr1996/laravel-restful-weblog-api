@@ -9,4 +9,6 @@ return [
     'account_delete_ok' =>'your account info successfully deleted',
 
     'file_error' =>'file does not upload successfully',
+
+    'like_ok' =>'your vote successfully registered',
 ];

@@ -11,6 +11,8 @@ return new class extends Migration
         Schema::create('likes', function (Blueprint $table) {
             $table->id();
             $table->tinyInteger('vote')->default(0);
+            $table->foreignId('user_id')
+                ->constrained('users');
             $table->morphs('likeable');
             $table->timestamps();
         });
