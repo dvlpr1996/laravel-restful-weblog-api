@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\v1\TagController;
 use App\Http\Controllers\Api\v1\LikeController;
 use App\Http\Controllers\Api\v1\PostController;
 use App\Http\Controllers\Api\v1\UserController;
+use App\Http\Controllers\Api\v1\DisLikeController;
 use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\auth\AuthController;
 
@@ -17,7 +18,7 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('{likeable_type}/{likeable_id}/like', [LikeController::class, 'like']);
-        Route::get('{likeable_type}/{likeable_id}/dislike', [DislikeController::class, 'dislike']);
+        Route::get('{likeable_type}/{likeable_id}/dislike', [DisLikeController::class, 'dislike']);
     });
 
     Route::controller(PostController::class)->group(function () {
