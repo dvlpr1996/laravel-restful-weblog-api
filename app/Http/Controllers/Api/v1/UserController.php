@@ -12,6 +12,11 @@ use App\Http\Requests\WriterUpdateRequest;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(User::class, 'user');
+    }
+
     public function index()
     {
         return new UserCollection(User::writer()->paginate(10));
@@ -50,16 +55,9 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function destroy($requestData)
+    public function destroy(User $user)
     {
-        if (is_numeric($requestData) && preg_match('/^\d+$/', $requestData)) {
-            User::writer()->findOrFail($requestData)->delete();
-        }
-
-        if (is_string($requestData) && preg_match('/[-a-zA-Z]+/', $requestData)) {
-            User::writer()->where('slug', $requestData)->firstOrFail()->delete();
-        }
-
+        User::writer()->findOrFail($user->id)->delete();
         return response()->json([
             'message' => __('api.account_delete_ok'),
             'status_code' => '200'

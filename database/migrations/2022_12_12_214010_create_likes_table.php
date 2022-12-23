@@ -12,7 +12,9 @@ return new class extends Migration
             $table->id();
             $table->tinyInteger('vote')->default(0);
             $table->foreignId('user_id')
-                ->constrained('users');
+                ->constrained('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->morphs('likeable');
             $table->timestamps();
         });
