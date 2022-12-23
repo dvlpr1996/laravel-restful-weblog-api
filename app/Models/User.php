@@ -44,10 +44,10 @@ class User extends Authenticatable
     }
 
     public function gravatar()
-	{
-		$hash = md5(strtolower($this->attributes['email']));
-		return "http://s.gravatar.com/avatar/$hash";
-	}
+    {
+        $hash = md5(strtolower($this->attributes['email']));
+        return "http://s.gravatar.com/avatar/$hash";
+    }
 
     public function scopeWriter($query)
     {
@@ -65,5 +65,19 @@ class User extends Authenticatable
             $query->posts()->where('slug', 'like', '%' . $params['q'] . '%');
 
         return $query;
+    }
+
+    public function isWriter()
+    {
+        if ($this->attributes['role'] === '0')
+            return true;
+        return false;
+    }
+
+    public function isAdmin()
+    {
+        if ($this->attributes['role'] === '1')
+            return true;
+        return false;
     }
 }

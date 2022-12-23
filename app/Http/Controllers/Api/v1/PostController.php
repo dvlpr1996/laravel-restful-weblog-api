@@ -16,6 +16,11 @@ use App\Http\Requests\PostUpdateRequest;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Post::class, 'post');
+    }
+
     public function index(Request $request)
     {
         return new PostCollection(Post::sort($request->all())->paginate(10)->withQueryString());
@@ -110,14 +115,14 @@ class PostController extends Controller
         ], 200);
     }
 
-    public function destroy($requestData)
+    public function destroy(Post $post)
     {
-        if (is_numeric($requestData) && preg_match('/^\d+$/', $requestData)) {
-            Post::findOrFail($requestData)->delete();
+        if (is_numeric($post) && preg_match('/^\d+$/', $post)) {
+            Post::findOrFail($post->id)->delete();
         }
 
-        if (is_string($requestData) && preg_match('/[-a-zA-Z]+/', $requestData)) {
-            Post::where('slug', $requestData)->firstOrFail()->delete();
+        if (is_string($post) && preg_match('/[-a-zA-Z]+/', $post)) {
+            Post::where('slug', $post->slug)->firstOrFail()->delete();
         }
 
         return response()->json([

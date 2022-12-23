@@ -61,7 +61,7 @@ Route::prefix('v1')->group(function () {
     Route::controller(AdminController::class)->group(function () {
         Route::middleware('auth:sanctum')->group(function () {
             Route::Get('admin/', 'index');
-            Route::Get('comments/{comment}/', 'destroy');
+            Route::Get('comments/{comment}', 'destroy');
         });
     });
 });
