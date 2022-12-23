@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\v1\TagController;
 use App\Http\Controllers\Api\v1\LikeController;
 use App\Http\Controllers\Api\v1\PostController;
 use App\Http\Controllers\Api\v1\UserController;
+use App\Http\Controllers\Api\v1\CommentController;
 use App\Http\Controllers\Api\v1\DisLikeController;
 use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\auth\AuthController;
@@ -49,6 +50,12 @@ Route::prefix('v1')->group(function () {
         Route::middleware('auth:sanctum')->group(function () {
             Route::GET('auth/logout', 'logout');
         });
+    });
+
+    Route::controller(CommentController::class)->group(function () {
+        Route::Get('posts/{post:slug}/comments', 'index');
+        Route::Post('posts/{post:slug}/comments', 'store');
+        # delete comments just for admins
     });
 });
 

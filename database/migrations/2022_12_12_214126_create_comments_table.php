@@ -14,7 +14,7 @@ return new class extends Migration
                 ->constrained('posts')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->integer('reply_of');
+            $table->integer('reply_of')->default('0');
             $table->string('body', 256);
             $table->string('author', 64);
             $table->string('email');

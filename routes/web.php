@@ -1,7 +1,8 @@
 <?php
 
+use App\Models\Comment;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-    # add fallback route
-// });
+Route::get('/', function () {
+
+});

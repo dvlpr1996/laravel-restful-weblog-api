@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Tag;
-use App\Models\Like;
 use App\Models\User;
 use App\Models\Image;
 use App\Models\Comment;
