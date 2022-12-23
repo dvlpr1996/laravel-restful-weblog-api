@@ -9,6 +9,11 @@ use App\Http\Resources\UserResource;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Comment::class, 'comment');
+    }
+    
     public function index()
     {
         return new UserResource(auth()->user());
