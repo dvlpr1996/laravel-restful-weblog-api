@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\v1\TagController;
 use App\Http\Controllers\Api\v1\LikeController;
 use App\Http\Controllers\Api\v1\PostController;
 use App\Http\Controllers\Api\v1\UserController;
+use App\Http\Controllers\Api\v1\AdminController;
 use App\Http\Controllers\Api\v1\CommentController;
 use App\Http\Controllers\Api\v1\DisLikeController;
 use App\Http\Controllers\Api\v1\CategoryController;
@@ -55,7 +56,13 @@ Route::prefix('v1')->group(function () {
     Route::controller(CommentController::class)->group(function () {
         Route::Get('posts/{post:slug}/comments', 'index');
         Route::Post('posts/{post:slug}/comments', 'store');
-        # delete comments just for admins
+    });
+
+    Route::controller(AdminController::class)->group(function () {
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::Get('admin/', 'index');
+            Route::Get('comments/{comment}/', 'destroy');
+        });
     });
 });
 
