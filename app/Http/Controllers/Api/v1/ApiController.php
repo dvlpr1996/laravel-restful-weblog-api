@@ -22,7 +22,7 @@ class ApiController extends Controller
         $mainEndPoints = [
             'posts' => [
                 'all posts' => $this->baseRoute . 'posts',
-                'post by slug' => $this->baseRoute . 'post/:slug',
+                'post by slug' => $this->baseRoute . 'posts/:slug',
                 'post store' => $this->baseRoute . 'posts/',
                 'post destroy' => $this->baseRoute . 'posts/:id',
                 'post update' => $this->baseRoute . 'posts/:slug',
