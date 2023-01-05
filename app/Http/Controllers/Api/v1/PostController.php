@@ -9,8 +9,6 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\PostResource;
-use App\Http\Resources\PostCollection;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\PostUpdateRequest;
 
@@ -18,12 +16,13 @@ class PostController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(Post::class, 'post');
+        $this->apiHandleRequestTraitNameSpaceSetter('post');
+        // $this->authorizeResource(Post::class, 'post');
     }
 
     public function index(Request $request)
     {
-        return new PostCollection(Post::sort($request->all())->paginate(10)->withQueryString());
+        return $this->showApiDataCollectionWithPagination(false);
     }
 
     public function store(PostRequest $request)
@@ -67,13 +66,7 @@ class PostController extends Controller
 
     public function show($requestData)
     {
-        if (is_numeric($requestData) && preg_match('/^\d+$/', $requestData)) {
-            return new PostResource(Post::findOrFail($requestData));
-        }
-
-        if (is_string($requestData) && preg_match('/[-a-zA-Z]+/', $requestData)) {
-            return new PostResource(Post::where('slug', $requestData)->firstOrFail());
-        }
+        return $this->showApiData($requestData);
     }
 
     public function update(PostUpdateRequest $request, Post $post)
@@ -117,7 +110,7 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-        Post::where('slug', $post->slug)->firstOrFail()->delete();
+        $this->getDataBySlug($post->slug)->delete();
         return response()->json([
             'message' => __('api.post_del_ok'),
             'status_code' => '200'
@@ -126,6 +119,6 @@ class PostController extends Controller
 
     public function userPost(Request $request, User $user)
     {
-        return new PostCollection($user->posts()->sort($request->all())->paginate(10));
+        return $this->showApiDataCollection($user->posts()->sort($request->all())->paginate(10));
     }
 }

@@ -42,7 +42,7 @@ Route::prefix('v1')->group(function () {
         Route::middleware('auth:sanctum')->group(function () {
             Route::GET('auth/me', 'me');
             Route::Post('users/{user:slug}', 'update');
-            Route::Get('users/{user}/destroy', 'destroy');
+            Route::Get('users/{user:slug}/destroy', 'destroy');
         });
     });
 

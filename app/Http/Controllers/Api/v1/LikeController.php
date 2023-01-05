@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Models\Like;
-use App\Models\Post;
 use App\Http\Controllers\Controller;
 
 class LikeController extends Controller

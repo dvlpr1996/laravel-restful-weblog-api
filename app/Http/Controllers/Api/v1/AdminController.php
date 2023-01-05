@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Models\User;
 use App\Models\Comment;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
 
 class AdminController extends Controller
 {
     public function __construct()
     {
+        $this->apiHandleRequestTraitNameSpaceSetter('user');
         $this->authorizeResource(Comment::class, 'comment');
     }
-    
+
     public function index()
     {
-        return new UserResource(auth()->user());
+        return $this->showApiDataResource(auth()->user());
     }
 
     public function destroy(Comment $comment)

@@ -6,13 +6,17 @@ use App\Models\Post;
 use App\Models\Comment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
-use App\Http\Resources\CommentCollection;
 
 class CommentController extends Controller
 {
+    public function __construct()
+    {
+        $this->apiHandleRequestTraitNameSpaceSetter('comment');
+    }
+
     public function index(Post $post)
     {
-        return new CommentCollection($post->comments()->paginate(10));
+        return $this->showApiDataCollection($post->comments()->paginate(10));
     }
 
     public function store(CommentRequest $request, Post $post)

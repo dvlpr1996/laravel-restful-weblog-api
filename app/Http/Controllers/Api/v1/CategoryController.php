@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Models\Post;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\PostCollection;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->apiHandleRequestTraitNameSpaceSetter('post');
+    }
     public function show(Category $category)
     {
-        return new PostCollection($category->posts()->paginate(10));
+        return $this->showApiDataCollection($category->posts()->paginate(10));
     }
 }
