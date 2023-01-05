@@ -8,7 +8,12 @@ class DisLikeController extends Controller
 {
     private $modelNameSpace = 'App\Models\\';
 
-    public function disLike($likeable_type, $likeable_id)
+    public function __construct()
+    {
+        $this->authorizeResource(Like::class, 'like');
+    }
+
+    public function create($likeable_type, $likeable_id)
     {
         $like = $this->modelNameSpace . ucfirst($likeable_type);
         $likeable_id = $like::find((int)$likeable_id);

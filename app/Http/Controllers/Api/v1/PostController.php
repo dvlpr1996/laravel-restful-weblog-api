@@ -117,14 +117,7 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-        if (is_numeric($post) && preg_match('/^\d+$/', $post)) {
-            Post::findOrFail($post->id)->delete();
-        }
-
-        if (is_string($post) && preg_match('/[-a-zA-Z]+/', $post)) {
-            Post::where('slug', $post->slug)->firstOrFail()->delete();
-        }
-
+        Post::where('slug', $post->slug)->firstOrFail()->delete();
         return response()->json([
             'message' => __('api.post_del_ok'),
             'status_code' => '200'

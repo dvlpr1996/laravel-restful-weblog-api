@@ -19,8 +19,8 @@ Route::prefix('v1')->group(function () {
     Route::GET('tags/{tagged:slug}/posts', [TagController::class, 'show']);
 
     Route::middleware('auth:sanctum')->group(function () {
-        Route::get('{likeable_type}/{likeable_id}/like', [LikeController::class, 'like']);
-        Route::get('{likeable_type}/{likeable_id}/dislike', [DisLikeController::class, 'dislike']);
+        Route::get('{likeable_type}/{likeable_id}/like', [LikeController::class, 'create']);
+        Route::get('{likeable_type}/{likeable_id}/dislike', [DisLikeController::class, 'create']);
     });
 
     Route::controller(PostController::class)->group(function () {
