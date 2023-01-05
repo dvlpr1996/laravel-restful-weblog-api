@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\traits\Date;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PostTag extends Model
 {
-    use HasFactory;
+    use HasFactory, Date;
 
     protected $fillable = [
         'post_id',
