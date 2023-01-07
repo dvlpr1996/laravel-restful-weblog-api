@@ -13,5 +13,8 @@ return [
     'like_ok' => 'your vote successfully registered',
 
     'comment_ok' => 'Your Comment Successfully Created',
-    'comment_delete_ok' => 'Comment Successfully Deleted'
+    'comment_delete_ok' => 'Comment Successfully Deleted',
+
+    'logout_ok' => 'you successfully log out',
+    'register_ok' => 'you successfully registered',
 ];

@@ -45,6 +45,7 @@ class ApiController extends Controller
             'auth' => [
                 'login' => $this->baseRoute . 'auth/login',
                 'logout' => $this->baseRoute . 'auth/logout',
+                'register' => $this->baseRoute . 'auth/register',
             ],
             'admin' => [
                 'index' => $this->baseRoute . 'admin',

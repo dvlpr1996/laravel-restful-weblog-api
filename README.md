@@ -6,7 +6,7 @@ Laravel Restful api weblog is an Api web application for managing weblog.
 
 ## Features
 
-- 23 endpoints
+- 24 endpoints
 - Reduce post images size when uploading
 - User can download post content as pdf file
 - Sending emails for writers in different situation
