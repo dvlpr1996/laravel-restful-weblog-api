@@ -45,6 +45,22 @@ class ApiController extends Controller
             'auth' => [
                 'login' => $this->baseRoute . 'auth/login',
                 'logout' => $this->baseRoute . 'auth/logout',
+            ],
+            'admin' => [
+                'index' => $this->baseRoute . 'admin',
+                'delete comment' => $this->baseRoute . 'comments/:id',
+                'delete user' => $this->baseRoute . 'users/user:slug/destroy'
+            ],
+            'comment' => [
+                'add new comments' => $this->baseRoute . 'posts/post:slug/comments',
+                'all comments' => $this->baseRoute . 'posts/post:slug/comments'
+            ],
+            'like' => [
+                'like post' => $this->baseRoute . 'Post/post:id/like',
+                'dislike post' => $this->baseRoute . 'Post/post:id/dislike',
+            ],
+            'tag' => [
+                'tag posts' => $this->baseRoute . 'tags/tagged:slug/posts'
             ]
         ];
 
