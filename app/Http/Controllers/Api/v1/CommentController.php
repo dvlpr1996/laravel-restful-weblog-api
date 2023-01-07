@@ -11,7 +11,7 @@ class CommentController extends Controller
 {
     public function __construct()
     {
-        $this->apiHandleRequestTraitNameSpaceSetter('comment');
+        $this->resourceHandlerTraitNameSpaceSetter('comment');
     }
 
     public function index(Post $post)

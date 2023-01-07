@@ -11,8 +11,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->apiHandleRequestTraitNameSpaceSetter('user');
-        // $this->authorizeResource(User::class, 'user');
+        $this->resourceHandlerTraitNameSpaceSetter('user');
     }
 
     public function index()
@@ -32,6 +31,8 @@ class UserController extends Controller
 
     public function update(WriterUpdateRequest $request, User $user)
     {
+        $this->authorize('update', $user);
+
         User::where('slug', $user->slug)->update([
             'fname' => $request->fname,
             'lname' => $request->lname,
@@ -47,6 +48,8 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        $this->authorize('delete', $user);
+
         $this->getDataBySlug($user->slug)->delete();
 
         return response()->json([

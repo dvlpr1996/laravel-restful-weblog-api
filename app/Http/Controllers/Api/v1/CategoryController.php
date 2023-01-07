@@ -9,7 +9,7 @@ class CategoryController extends Controller
 {
     public function __construct()
     {
-        $this->apiHandleRequestTraitNameSpaceSetter('post');
+        $this->resourceHandlerTraitNameSpaceSetter('post');
     }
     public function show(Category $category)
     {

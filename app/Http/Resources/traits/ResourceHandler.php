@@ -23,7 +23,7 @@ trait ResourceHandler
         $this->collection = 'App\Http\Resources\\' . ucfirst($modelName . 'collection');
     }
 
-    protected function apiHandleRequestTraitNameSpaceSetter(string $resourceName)
+    protected function resourceHandlerTraitNameSpaceSetter(string $resourceName)
     {
         $this->setModelNameSpace($resourceName);
         $this->setResourceNameSpace($resourceName);

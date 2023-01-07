@@ -16,8 +16,7 @@ class PostController extends Controller
 {
     public function __construct()
     {
-        $this->apiHandleRequestTraitNameSpaceSetter('post');
-        // $this->authorizeResource(Post::class, 'post');
+        $this->resourceHandlerTraitNameSpaceSetter('post');
     }
 
     public function index(Request $request)
@@ -27,6 +26,8 @@ class PostController extends Controller
 
     public function store(PostRequest $request)
     {
+        $this->authorize('create', Post::class);
+
         $fileName = Str::slug(mt_rand(1, time()) . ' ' . $request->title) . '.' . $request->file('image')->extension();
 
         if (!Storage::disk('public')->exists('/images/')) {
@@ -71,6 +72,8 @@ class PostController extends Controller
 
     public function update(PostUpdateRequest $request, Post $post)
     {
+        $this->authorize('update', $post);
+
         $fileName = Str::slug($request->title) . '.' . $request->file('image')->extension();
 
         if (!Storage::disk('public')->exists('/images/')) {
@@ -110,6 +113,8 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
+
         $this->getDataBySlug($post->slug)->delete();
         return response()->json([
             'message' => __('api.post_del_ok'),

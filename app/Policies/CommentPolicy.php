@@ -11,9 +11,9 @@ class CommentPolicy
 {
     use HandlesAuthorization;
 
-    public function delete(User $user, Comment $comment)
+    public function delete(User $user)
     {
-        return (($user->id === auth()->user()->id) && $user->isAdmin()) ? Response::allow()
-            : Response::deny('You do not have permission for this action');
+        return (($user->id === auth()->user()->id) && $user->isAdmin()) ? Response::allow() :
+            Response::deny('You do not have permission for this action');
     }
 }

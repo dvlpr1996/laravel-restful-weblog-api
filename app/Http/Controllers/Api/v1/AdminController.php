@@ -9,8 +9,7 @@ class AdminController extends Controller
 {
     public function __construct()
     {
-        $this->apiHandleRequestTraitNameSpaceSetter('user');
-        $this->authorizeResource(Comment::class, 'comment');
+        $this->resourceHandlerTraitNameSpaceSetter('user');
     }
 
     public function index()
@@ -20,6 +19,8 @@ class AdminController extends Controller
 
     public function destroy(Comment $comment)
     {
+        $this->authorize('delete', $comment);
+
         Comment::findOrFail($comment->id)->delete();
 
         return response()->json([
