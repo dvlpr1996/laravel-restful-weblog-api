@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Models\Like;
+use App\Events\Like;
 use App\Http\Controllers\Controller;
 
 class LikeController extends Controller
@@ -19,6 +19,8 @@ class LikeController extends Controller
         $like = $this->modelNameSpace . ucfirst($likeable_type);
         $likeable_id = $like::find((int)$likeable_id);
         $likeable_id->likedBy(auth()->user());
+
+        event(new Like(auth()->user()->fullName(), $likeable_id->user, $likeable_id->slug));
 
         return response()->json([
             'message' => __('api.like_ok'),
