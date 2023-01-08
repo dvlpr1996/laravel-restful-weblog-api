@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1\auth;
 
 use App\Models\User;
+use App\Events\Login;
 use Illuminate\Support\Str;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
@@ -17,6 +18,8 @@ class AuthController extends Controller
         $request->authenticate();
 
         $token = auth()->user()->createToken($request->email);
+
+        event(new Login(auth()->user()));
 
         return response()->json([
             'message' => 'welcome back dear ' . auth()->user()->fullName(),
