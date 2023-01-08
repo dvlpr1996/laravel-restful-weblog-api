@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Models\User;
 use Illuminate\Support\Str;
+use App\Events\DeleteAccount;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WriterUpdateRequest;
 
@@ -51,6 +52,8 @@ class UserController extends Controller
         $this->authorize('delete', $user);
 
         $this->getDataBySlug($user->slug)->delete();
+
+        event(new DeleteAccount($user));
 
         return response()->json([
             'message' => __('api.account_delete_ok'),
