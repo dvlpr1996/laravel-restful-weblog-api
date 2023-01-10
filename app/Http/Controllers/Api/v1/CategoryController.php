@@ -11,6 +11,7 @@ class CategoryController extends Controller
     {
         $this->resourceHandlerTraitNameSpaceSetter('post');
     }
+    
     public function show(Category $category)
     {
         return $this->showApiDataCollection($category->posts()->paginate(10));

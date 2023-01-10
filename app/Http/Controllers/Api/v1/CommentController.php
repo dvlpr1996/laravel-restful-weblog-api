@@ -29,9 +29,6 @@ class CommentController extends Controller
             'reply_of' => $request->reply_of,
         ]);
 
-        return response()->json([
-            'message' => __('api.comment_ok'),
-            'status_code' => '201'
-        ], 201);
+        return httpResponse(__('api.comment_ok'), '201');
     }
 }

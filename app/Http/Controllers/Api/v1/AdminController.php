@@ -20,12 +20,8 @@ class AdminController extends Controller
     public function destroy(Comment $comment)
     {
         $this->authorize('delete', $comment);
-
         Comment::findOrFail($comment->id)->delete();
-
-        return response()->json([
-            'message' => __('api.comment_delete_ok'),
-            'status_code' => '200'
-        ], 200);
+        
+        return httpResponse(__('api.comment_delete_ok'), '200');
     }
 }

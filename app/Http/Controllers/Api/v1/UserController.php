@@ -41,23 +41,16 @@ class UserController extends Controller
             'email' => $request->email,
         ]);
 
-        return response()->json([
-            'message' => __('api.account_update_ok'),
-            'status_code' => '200'
-        ], 200);
+        return httpResponse(__('api.account_update_ok'), '200');
     }
 
     public function destroy(User $user)
     {
         $this->authorize('delete', $user);
-
         $this->getDataBySlug($user->slug)->delete();
 
         event(new DeleteAccount($user));
 
-        return response()->json([
-            'message' => __('api.account_delete_ok'),
-            'status_code' => '200'
-        ], 200);
+        return httpResponse(__('api.account_delete_ok'), '200');
     }
 }

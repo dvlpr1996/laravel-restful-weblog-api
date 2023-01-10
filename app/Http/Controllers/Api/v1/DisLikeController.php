@@ -16,12 +16,9 @@ class DisLikeController extends Controller
     public function create($likeable_type, $likeable_id)
     {
         $like = $this->modelNameSpace . ucfirst($likeable_type);
-        $likeable_id = $like::find((int)$likeable_id);
-        $likeable_id->dislikedBy(auth()->user());
+        $likeable_id = $like::find((int)$likeable_id)->dislikedBy(auth()->user());
 
-        return response()->json([
-            'message' => __('api.like_ok'),
-            'status_code' => '201'
-        ], 201);
+        return httpResponse(__('api.dislike_ok'), '201');
+
     }
 }

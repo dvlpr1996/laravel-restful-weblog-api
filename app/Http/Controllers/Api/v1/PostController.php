@@ -51,10 +51,7 @@ class PostController extends Controller
             'path' => $file
         ]);
 
-        return response()->json([
-            'message' => __('api.post_create_ok'),
-            'status_code' => '201'
-        ], 201);
+        return httpResponse(__('api.post_create_ok'), '201');
     }
 
     public function update(PostUpdateRequest $request, Post $post)
@@ -80,10 +77,7 @@ class PostController extends Controller
         $image->post_id = $post->id;
         $image->save();
 
-        return response()->json([
-            'message' => __('api.post_update_ok'),
-            'status_code' => '200'
-        ], 200);
+        return httpResponse(__('api.post_update_ok'), '200');
     }
 
     public function destroy(Post $post)
@@ -92,12 +86,10 @@ class PostController extends Controller
 
         $post = Post::where('id', $post->id)->firstOrFail();
         Storage::delete($post->image->path);
+
         $post->delete();
 
-        return response()->json([
-            'message' => __('api.post_del_ok'),
-            'status_code' => '200'
-        ], 200);
+        return httpResponse(__('api.post_del_ok'), '200');
     }
 
     public function show($requestData)

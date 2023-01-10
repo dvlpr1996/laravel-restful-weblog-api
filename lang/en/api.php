@@ -11,6 +11,7 @@ return [
     'file_error' => 'file does not upload successfully',
 
     'like_ok' => 'your vote successfully registered',
+    'dislike_ok' => 'your vote successfully registered',
 
     'comment_ok' => 'Your Comment Successfully Created',
     'comment_delete_ok' => 'Comment Successfully Deleted',
