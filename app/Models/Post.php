@@ -37,9 +37,9 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function images()
+    public function image()
     {
-        return $this->hasMany(Image::class);
+        return $this->hasOne(Image::class);
     }
 
     public function comments()

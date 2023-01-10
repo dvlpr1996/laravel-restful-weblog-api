@@ -100,10 +100,10 @@ class PostController extends Controller
             $file = __('api.file_error');
         }
 
-        $image = Image::where('post_id', $post->id)->update([
-            'post_id' => $post->id,
-            'path' => $file
-        ]);
+        $image = Image::where('post_id', $post->id)->firstOrFail();
+        $image->path = $file;
+        $image->post_id = $post->id;
+        $image->save();
 
         return response()->json([
             'message' => __('api.post_update_ok'),
@@ -115,7 +115,10 @@ class PostController extends Controller
     {
         $this->authorize('delete', $post);
 
-        $this->getDataBySlug($post->slug)->delete();
+        $post = Post::where('id', $post->id)->firstOrFail();
+        Storage::delete($post->image->path);
+        $post->delete();
+
         return response()->json([
             'message' => __('api.post_del_ok'),
             'status_code' => '200'
