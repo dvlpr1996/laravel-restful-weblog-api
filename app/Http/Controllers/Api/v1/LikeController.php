@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Events\Like;
+use App\Traits\likeActionTrait;
 use App\Http\Controllers\Controller;
 
 class LikeController extends Controller
 {
-    private $modelNameSpace = 'App\Models\\';
+    use likeActionTrait;
 
     public function __construct()
     {
@@ -16,11 +16,7 @@ class LikeController extends Controller
 
     public function create($likeable_type, $likeable_id)
     {
-        $like = $this->modelNameSpace . ucfirst($likeable_type);
-        $likeable_id = $like::find((int)$likeable_id)->likedBy(auth()->user());
-
-        event(new Like(auth()->user()->fullName(), $likeable_id->user, $likeable_id->slug));
-
+        $this->likeAction($likeable_type, $likeable_id, true);
         return httpResponse(__('api.like_ok'), '201');
     }
 }
