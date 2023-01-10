@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Image;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Services\UploadService;
 use App\Http\Requests\PostRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -14,9 +15,12 @@ use App\Http\Requests\PostUpdateRequest;
 
 class PostController extends Controller
 {
+    private $uploadFile;
+
     public function __construct()
     {
         $this->resourceHandlerTraitNameSpaceSetter('post');
+        $this->uploadFile = new UploadService;
     }
 
     public function index(Request $request)
@@ -28,14 +32,6 @@ class PostController extends Controller
     {
         $this->authorize('create', Post::class);
 
-        $fileName = Str::slug(mt_rand(1, time()) . ' ' . $request->title) . '.' . $request->file('image')->extension();
-
-        if (!Storage::disk('public')->exists('/images/')) {
-            Storage::disk('public')->makeDirectory('images');
-        }
-
-        $tags = explode(", ", $request->tags);
-
         $post = Post::create([
             'body' => $request->body,
             'title' => $request->title,
@@ -46,13 +42,9 @@ class PostController extends Controller
             'tags' => $request->tags,
         ]);
 
-        $post->tag($tags);
+        $post->tag(explode(", ", $request->tags));
 
-        $file = Storage::putFileAs('public/images', $request->file('image'), $fileName);
-
-        if (!$file) {
-            $file = __('api.file_error');
-        }
+        $file = $this->uploadFile->uploadImageFile($request);
 
         Image::create([
             'post_id' => $post->id,
@@ -65,22 +57,9 @@ class PostController extends Controller
         ], 201);
     }
 
-    public function show($requestData)
-    {
-        return $this->showApiData($requestData);
-    }
-
     public function update(PostUpdateRequest $request, Post $post)
     {
         $this->authorize('update', $post);
-
-        $fileName = Str::slug($request->title) . '.' . $request->file('image')->extension();
-
-        if (!Storage::disk('public')->exists('/images/')) {
-            Storage::disk('public')->makeDirectory('images');
-        }
-
-        $tags = explode(", ", $request->tags);
 
         $post->update([
             'body' => $request->body,
@@ -92,13 +71,9 @@ class PostController extends Controller
             'tags' => $request->tags,
         ]);
 
-        $post->tag($tags);
+        $post->tag(explode(", ", $request->tags));
 
-        $file = Storage::putFileAs('public/images', $request->file('image'), $fileName);
-
-        if (!$file) {
-            $file = __('api.file_error');
-        }
+        $file = $this->uploadFile->uploadImageFile($request);
 
         $image = Image::where('post_id', $post->id)->firstOrFail();
         $image->path = $file;
@@ -123,6 +98,11 @@ class PostController extends Controller
             'message' => __('api.post_del_ok'),
             'status_code' => '200'
         ], 200);
+    }
+
+    public function show($requestData)
+    {
+        return $this->showApiData($requestData);
     }
 
     public function userPost(Request $request, User $user)
