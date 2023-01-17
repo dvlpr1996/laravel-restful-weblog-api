@@ -44,11 +44,11 @@ class PostController extends Controller
 
         $post->tag(explode(", ", $request->tags));
 
-        $file = $this->uploadFile->uploadImageFile($request);
+        $filePath = $this->uploadFile->uploadImageFile($request);
 
         Image::create([
             'post_id' => $post->id,
-            'path' => $file
+            'path' => $filePath
         ]);
 
         return httpResponse(__('api.post_create_ok'), '201');
@@ -70,10 +70,10 @@ class PostController extends Controller
 
         $post->tag(explode(", ", $request->tags));
 
-        $file = $this->uploadFile->uploadImageFile($request);
+        $filePath = $this->uploadFile->uploadImageFile($request);
 
         $image = Image::where('post_id', $post->id)->firstOrFail();
-        $image->path = $file;
+        $image->path = $filePath;
         $image->post_id = $post->id;
         $image->save();
 

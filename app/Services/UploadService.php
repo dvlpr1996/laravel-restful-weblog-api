@@ -3,10 +3,13 @@
 namespace App\Services;
 
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
 class UploadService
 {
+    private $storagePath = 'app/public/images/';
+
     private function setImageFileName($request)
     {
         return Str::slug($request->title) . '.' . $request->file('image')->extension();
@@ -18,18 +21,19 @@ class UploadService
             Storage::disk('public')->makeDirectory('images');
     }
 
+    private function pathSetter()
+    {
+        return storage_path($this->storagePath);
+    }
+
     public function uploadImageFile($request)
     {
         $this->checkDirectory();
 
-        $file = Storage::putFileAs(
-            'public/images',
-            $request->file('image'),
-            $this->setImageFileName($request)
-        );
+        $image = Image::make($request->file('image'));
+        $filePath = $this->setImageFileName($request);
+        $image->save($this->pathSetter() . $filePath);
 
-        if (!$file) return __('api.file_error');
-
-        return $file;
+        return 'public/images/' . $filePath;
     }
 }

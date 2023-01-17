@@ -20,7 +20,7 @@ class PostRequest extends FormRequest
             'summary' => ['required', 'string', 'max:128'],
             'category_id' => ['required', Rule::in(['1', '2', '3', '4'])],
             'tags' => ['required', 'string'],
-            'image' => ['required', 'file', 'min:1', 'max:1024', 'mimes:jpeg,jpg']
+            'image' => ['required', 'file', 'max:1024', 'mimes:jpeg,jpg']
         ];
     }
 }

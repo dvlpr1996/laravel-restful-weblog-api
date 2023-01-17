@@ -14,7 +14,7 @@ class PostResource extends JsonResource
             'slug' => $this->slug,
             'summary' => $this->summary,
             'category' => $this->category,
-            'image' => $this->images,
+            'image' => $this->image,
             'tags' => $this->tags,
             'comment_count' => count($this->comments) ?? '0',
             'like_count' => $this->likesCount ?? '0',
