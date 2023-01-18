@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -13,7 +12,6 @@ class LogInEmailNotification extends Notification
 
     public function __construct()
     {
-
     }
 
     public function via($notifiable)
@@ -24,9 +22,9 @@ class LogInEmailNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->greeting('hi ' . $notifiable->fullName())
+                    ->greeting('hi '.$notifiable->fullName())
                     ->line('you log in successfully to your account')
-                    ->line('log in time : '. date('y-m-d'))
+                    ->line('log in time : '.date('y-m-d'))
                     ->line('Thank you for using our application!');
     }
 

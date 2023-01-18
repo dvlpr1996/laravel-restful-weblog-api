@@ -2,11 +2,9 @@
 
 namespace App\Policies;
 
-use App\Models\Like;
-use App\Models\Post;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
 class LikePolicy
 {

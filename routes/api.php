@@ -1,20 +1,19 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\v1\ApiController;
-use App\Http\Controllers\Api\V1\PdfController;
-use App\Http\Controllers\Api\v1\TagController;
-use App\Http\Controllers\Api\v1\LikeController;
-use App\Http\Controllers\Api\v1\PostController;
-use App\Http\Controllers\Api\v1\UserController;
 use App\Http\Controllers\Api\v1\AdminController;
+use App\Http\Controllers\Api\v1\ApiController;
+use App\Http\Controllers\Api\v1\auth\AuthController;
+use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\CommentController;
 use App\Http\Controllers\Api\v1\DisLikeController;
-use App\Http\Controllers\Api\v1\CategoryController;
-use App\Http\Controllers\Api\v1\auth\AuthController;
+use App\Http\Controllers\Api\v1\LikeController;
+use App\Http\Controllers\Api\V1\PdfController;
+use App\Http\Controllers\Api\v1\PostController;
+use App\Http\Controllers\Api\v1\TagController;
+use App\Http\Controllers\Api\v1\UserController;
+use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
-
     Route::GET('/', [ApiController::class, 'index'])->name('mainEndPoints');
     Route::GET('categories/{category:slug}/posts', [CategoryController::class, 'show']);
     Route::GET('tags/{tagged:slug}/posts', [TagController::class, 'show']);
@@ -73,6 +72,6 @@ Route::fallback(function () {
     return response()->json([
         'status' => 'error',
         'message' => 'page not found you can see all main available routes at '
-            . route('mainEndPoints')
+            .route('mainEndPoints'),
     ], 404);
 });

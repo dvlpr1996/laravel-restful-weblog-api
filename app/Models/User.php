@@ -3,13 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Models\Post;
 use App\Models\traits\Date;
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -47,6 +46,7 @@ class User extends Authenticatable
     public function gravatar()
     {
         $hash = md5(strtolower($this->attributes['email']));
+
         return "http://s.gravatar.com/avatar/$hash";
     }
 
@@ -62,23 +62,28 @@ class User extends Authenticatable
 
     public function scopeSort(Builder $query, array $params)
     {
-        if (isset($params['q']))
-            $query->posts()->where('slug', 'like', '%' . $params['q'] . '%');
+        if (isset($params['q'])) {
+            $query->posts()->where('slug', 'like', '%'.$params['q'].'%');
+        }
 
         return $query;
     }
 
     public function isWriter()
     {
-        if ($this->attributes['role'] === '0')
+        if ($this->attributes['role'] === '0') {
             return true;
+        }
+
         return false;
     }
 
     public function isAdmin()
     {
-        if ($this->attributes['role'] === '1')
+        if ($this->attributes['role'] === '1') {
             return true;
+        }
+
         return false;
     }
 }

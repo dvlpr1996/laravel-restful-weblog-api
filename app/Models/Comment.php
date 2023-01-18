@@ -2,13 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\Like;
-use App\Models\Post;
 use App\Models\traits\Date;
 use App\Models\traits\Likeable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {

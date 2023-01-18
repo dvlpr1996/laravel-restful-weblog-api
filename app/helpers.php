@@ -1,11 +1,11 @@
 <?php
 
-if (!function_exists('httpResponse')) {
+if (! function_exists('httpResponse')) {
     function httpResponse(string $message, string $statusCode)
     {
         return response()->json([
             'message' => $message,
-            'status_code' => $statusCode
-        ], (int)$statusCode);
+            'status_code' => $statusCode,
+        ], (int) $statusCode);
     }
 }

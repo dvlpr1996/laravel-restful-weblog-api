@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Api\v1\auth;
 
-use App\Models\User;
 use App\Events\Login;
-use Illuminate\Support\Str;
-use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\RegisterRequest;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -22,8 +22,8 @@ class AuthController extends Controller
         event(new Login(auth()->user()));
 
         return response()->json([
-            'message' => 'welcome back dear ' . auth()->user()->fullName(),
-            'token' => $token->plainTextToken
+            'message' => 'welcome back dear '.auth()->user()->fullName(),
+            'token' => $token->plainTextToken,
         ]);
     }
 
@@ -34,7 +34,7 @@ class AuthController extends Controller
             'lname' => $request->lname,
             'email' => $request->email,
             'bio' => $request->bio,
-            'slug' => Str::slug($request->fname . ' ' . $request->lname),
+            'slug' => Str::slug($request->fname.' '.$request->lname),
             'password' => Hash::make($request->password),
         ]);
 
@@ -44,7 +44,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => __('api.register_ok'),
-            'token' => $token->plainTextToken
+            'token' => $token->plainTextToken,
         ]);
     }
 

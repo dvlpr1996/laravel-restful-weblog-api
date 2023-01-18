@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Models\User;
-use Illuminate\Support\Str;
 use App\Events\DeleteAccount;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WriterUpdateRequest;
+use App\Models\User;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -37,7 +37,7 @@ class UserController extends Controller
         User::where('slug', $user->slug)->update([
             'fname' => $request->fname,
             'lname' => $request->lname,
-            'slug' => Str::slug($request->fname . ' ' . $request->lname),
+            'slug' => Str::slug($request->fname.' '.$request->lname),
             'email' => $request->email,
         ]);
 

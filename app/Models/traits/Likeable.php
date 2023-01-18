@@ -44,35 +44,39 @@ trait Likeable
 
     public function likedBy(User $user)
     {
-        if ($this->isLikedBy($user)) return;
+        if ($this->isLikedBy($user)) {
+            return;
+        }
 
         if ($this->isDislikedBy($user)) {
             return $this->likes()->update([
                 'vote' => 1,
-                'user_id' => $user->id
+                'user_id' => $user->id,
             ]);
         }
 
         return $this->likes()->create([
             'vote' => 1,
-            'user_id' => $user->id
+            'user_id' => $user->id,
         ]);
     }
 
     public function dislikedBy(User $user)
     {
-        if ($this->isDislikedBy($user)) return;
+        if ($this->isDislikedBy($user)) {
+            return;
+        }
 
         if ($this->isLikedBy($user)) {
             return $this->likes()->update([
                 'vote' => -1,
-                'user_id' => $user->id
+                'user_id' => $user->id,
             ]);
         }
 
         return $this->likes()->create([
             'vote' => -1,
-            'user_id' => $user->id
+            'user_id' => $user->id,
         ]);
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PostUpdateRequest extends FormRequest
 {
@@ -22,7 +22,7 @@ class PostUpdateRequest extends FormRequest
             'category_id' => ['nullable', Rule::in(['1', '2', '3', '4'])],
 
             'tags' => ['nullable', 'string'],
-            'image' => ['nullable', 'file', 'max:1024', 'mimes:jpeg,jpg']
+            'image' => ['nullable', 'file', 'max:1024', 'mimes:jpeg,jpg'],
         ];
     }
 }

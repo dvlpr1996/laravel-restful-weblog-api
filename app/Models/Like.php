@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Models\traits\Date;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Like extends Model
 {
@@ -12,7 +12,7 @@ class Like extends Model
 
     protected $fillable = [
         'vote',
-        'user_id'
+        'user_id',
     ];
 
     public function likeable()

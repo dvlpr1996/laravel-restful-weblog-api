@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserFactory extends Factory
 {
@@ -15,7 +15,7 @@ class UserFactory extends Factory
             'lname' => fake()->lastName(),
             'bio' => fake()->sentence(10),
             'slug' => fake()->slug(2),
-            'role' => (string)mt_rand(0, 1),
+            'role' => (string) mt_rand(0, 1),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => Hash::make('123456789'),

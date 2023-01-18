@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -41,9 +40,9 @@ class DeleteAccountNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->greeting('hi ' . $notifiable->fullName())
+            ->greeting('hi '.$notifiable->fullName())
             ->line('your account successfully deleted')
-            ->line('delete account in : ' . date('y-m-d'));
+            ->line('delete account in : '.date('y-m-d'));
     }
 
     /**

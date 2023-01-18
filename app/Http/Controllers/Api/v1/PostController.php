@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\PostRequest;
+use App\Http\Requests\PostUpdateRequest;
+use App\Models\Image;
 use App\Models\Post;
 use App\Models\User;
-use App\Models\Image;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Services\UploadService;
-use App\Http\Requests\PostRequest;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\PostUpdateRequest;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -42,13 +42,13 @@ class PostController extends Controller
             'tags' => $request->tags,
         ]);
 
-        $post->tag(explode(", ", $request->tags));
+        $post->tag(explode(', ', $request->tags));
 
         $filePath = $this->uploadFile->uploadImageFile($request);
 
         Image::create([
             'post_id' => $post->id,
-            'path' => $filePath
+            'path' => $filePath,
         ]);
 
         return httpResponse(__('api.post_create_ok'), '201');
@@ -68,7 +68,7 @@ class PostController extends Controller
             'tags' => $request->tags,
         ]);
 
-        $post->tag(explode(", ", $request->tags));
+        $post->tag(explode(', ', $request->tags));
 
         $filePath = $this->uploadFile->uploadImageFile($request);
 

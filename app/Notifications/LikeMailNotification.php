@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -12,6 +11,7 @@ class LikeMailNotification extends Notification
     use Queueable;
 
     public $likedBy;
+
     public $liked;
 
     public function __construct($likedBy, $liked)
@@ -28,9 +28,9 @@ class LikeMailNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->greeting('hi ' . $notifiable->fullName())
-            ->line('your post : ' . $this->liked . ' liked by ' . $this->likedBy)
-            ->line('at : ' . date('y-m-d'));
+            ->greeting('hi '.$notifiable->fullName())
+            ->line('your post : '.$this->liked.' liked by '.$this->likedBy)
+            ->line('at : '.date('y-m-d'));
     }
 
     /**

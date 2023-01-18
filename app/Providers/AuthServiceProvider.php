@@ -4,14 +4,14 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 
+use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\User;
-use App\Models\Comment;
+use App\Policies\CommentPolicy;
 use App\Policies\LikePolicy;
 use App\Policies\PostPolicy;
 use App\Policies\UserPolicy;
-use App\Policies\CommentPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider

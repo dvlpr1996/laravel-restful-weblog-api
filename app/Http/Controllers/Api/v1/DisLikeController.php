@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Traits\likeActionTrait;
 use App\Http\Controllers\Controller;
+use App\Traits\likeActionTrait;
 
 class DisLikeController extends Controller
 {
@@ -17,6 +17,7 @@ class DisLikeController extends Controller
     public function create($likeable_type, $likeable_id)
     {
         $this->likeAction($likeable_type, $likeable_id, false);
+
         return httpResponse(__('api.dislike_ok'), '201');
     }
 }

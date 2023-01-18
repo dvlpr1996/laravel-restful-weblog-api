@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Models\Post;
-use App\Models\Comment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
+use App\Models\Comment;
+use App\Models\Post;
 
 class CommentController extends Controller
 {

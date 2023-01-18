@@ -3,9 +3,8 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Comment;
-use Illuminate\Auth\Access\Response;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
 class CommentPolicy
 {

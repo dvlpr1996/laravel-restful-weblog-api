@@ -2,8 +2,8 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Support\Facades\Config;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\Config;
 
 class PostCollection extends ResourceCollection
 {
@@ -11,7 +11,7 @@ class PostCollection extends ResourceCollection
     {
         return [
             'data' => $this->collection,
-            'meta' => Config::get('api.meta_info')
+            'meta' => Config::get('api.meta_info'),
         ];
     }
 }

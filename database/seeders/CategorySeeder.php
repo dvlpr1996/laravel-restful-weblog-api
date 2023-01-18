@@ -3,9 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
-use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Str;
 
 class CategorySeeder extends Seeder
 {
@@ -13,23 +12,23 @@ class CategorySeeder extends Seeder
     {
         $categories = [
             'programming' => [
-                'slug' => Str::slug('programming')
+                'slug' => Str::slug('programming'),
             ],
             'technology' => [
-                'slug' => Str::slug('technology')
+                'slug' => Str::slug('technology'),
             ],
             'science' => [
-                'slug' => Str::slug('science')
+                'slug' => Str::slug('science'),
             ],
             'review' => [
-                'slug' => Str::slug('review')
-            ]
+                'slug' => Str::slug('review'),
+            ],
         ];
 
         foreach ($categories as $key => $value) {
             Category::create([
                 'name' => $key,
-                'slug' => $value['slug']
+                'slug' => $value['slug'],
             ]);
         }
     }

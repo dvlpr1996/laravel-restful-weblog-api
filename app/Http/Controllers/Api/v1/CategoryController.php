@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Models\Category;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
@@ -11,7 +11,7 @@ class CategoryController extends Controller
     {
         $this->resourceHandlerTraitNameSpaceSetter('post');
     }
-    
+
     public function show(Category $category)
     {
         return $this->showApiDataCollection($category->posts()->paginate(10));

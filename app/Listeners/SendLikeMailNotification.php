@@ -3,9 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\Like;
-use Illuminate\Queue\InteractsWithQueue;
 use App\Notifications\LikeMailNotification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class SendLikeMailNotification
 {

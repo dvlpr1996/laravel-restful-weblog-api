@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Models\Post;
-use Illuminate\Support\Str;
-use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
+use App\Models\Post;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PdfController extends Controller
 {
     private function imagePath($image)
     {
-        if (!is_null($image))
-            return public_path() . '/storage/' . $image;
-        return public_path() . '/storage/images/dummy.jpg';
+        if (! is_null($image)) {
+            return public_path().'/storage/'.$image;
+        }
+
+        return public_path().'/storage/images/dummy.jpg';
     }
 
     public function index(Post $post)

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Models\Comment;
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 
 class AdminController extends Controller
 {
@@ -21,7 +21,7 @@ class AdminController extends Controller
     {
         $this->authorize('delete', $comment);
         Comment::findOrFail($comment->id)->delete();
-        
+
         return httpResponse(__('api.comment_delete_ok'), '200');
     }
 }
