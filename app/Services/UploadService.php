@@ -34,6 +34,6 @@ class UploadService
         $filePath = $this->setImageFileName($request);
         $image->save($this->pathSetter() . $filePath);
 
-        return 'public/images/' . $filePath;
+        return 'images/' . $filePath;
     }
 }

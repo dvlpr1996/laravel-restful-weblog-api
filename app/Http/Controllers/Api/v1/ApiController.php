@@ -62,7 +62,8 @@ class ApiController extends Controller
             ],
             'tag' => [
                 'tag posts' => $this->baseRoute . 'tags/tagged:slug/posts'
-            ]
+            ],
+            'pdf download' => $this->baseRoute . 'pdf/{post:slug}'
         ];
 
         return $mainEndPoints;

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\ApiController;
+use App\Http\Controllers\Api\V1\PdfController;
 use App\Http\Controllers\Api\v1\TagController;
 use App\Http\Controllers\Api\v1\LikeController;
 use App\Http\Controllers\Api\v1\PostController;
@@ -17,6 +18,7 @@ Route::prefix('v1')->group(function () {
     Route::GET('/', [ApiController::class, 'index'])->name('mainEndPoints');
     Route::GET('categories/{category:slug}/posts', [CategoryController::class, 'show']);
     Route::GET('tags/{tagged:slug}/posts', [TagController::class, 'show']);
+    Route::GET('pdf/{post:slug}', [PdfController::class, 'index']);
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('{likeable_type}/{likeable_id}/like', [LikeController::class, 'create']);
